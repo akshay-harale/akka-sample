@@ -2,7 +2,7 @@ package com.lightbend.akka.sample
 
 import java.util.Date
 
-import akka.actor.{Actor, Kill, PoisonPill, Props}
+import akka.actor.{Actor, Kill, PoisonPill, Props, Terminated}
 import com.datastax.driver.core.{Cluster, Session}
 
 /**
@@ -25,7 +25,7 @@ class QueryExecutor(session:Session) extends Actor{
         case ex:Exception=>println("Exception:"+ex.getMessage)
       }
     self ! PoisonPill
-    case PoisonPill=>
+    case Terminated=>
       println("Poisen pill")
     case _=>
       println("Wrong query")
